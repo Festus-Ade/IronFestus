@@ -46,9 +46,12 @@ ORDER BY title DESC;
 -- Query 6
 -- Display the total amount rung up by each staff member in August of 2005.
 
-SELECT sum(P.amount)
-FROM PAYMENT AS P
-INNER JOIN STAFF AS S ON S.staff_id = p.staff_id
-WHERE sum(p.amount) = S.Staff_id
-GROUP BY S.staff_id
+SELECT CONCAT(s.first_name, ' ', s.last_name) AS full_name, SUM(p.amount) 
+FROM staff AS s
+INNER JOIN payment AS p ON s.staff_id = p.staff_id
+WHERE p.payment_date LIKE '2005-08%'
+GROUP BY full_name;
+
+-- Query 7
+-- List each film and the number of actors who are listed for that film.
 
