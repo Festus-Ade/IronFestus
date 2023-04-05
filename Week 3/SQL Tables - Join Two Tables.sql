@@ -12,11 +12,11 @@ LIMIT 1;
 -- Query 2
 -- Most active customer(the customer that has rented the most number of films)
 
-SELECT CU.first_name, CU.last_name, COUNT(RE.inventory_id)
+SELECT CU.first_name, CU.last_name, COUNT(RE.customer_id)
 FROM customer AS CU
 INNER JOIN rental AS RE ON CU.customer_id = RE.customer_id
 GROUP BY CU.customer_id
-ORDER BY COUNT(RE.inventory_id) DESC
+ORDER BY COUNT(RE.customer_id) DESC
 LIMIT 1;
 
 -- Query 3
@@ -37,7 +37,7 @@ INNER JOIN ADDRESS AS AD ON ST.Address_ID = AD.Address_ID;
 
 -- Query 5
 -- get films titles where the film language is either English or italian, and whose titles starts with letter "M" , sorted by title descending.
-SELECT title FROM film
+SELECT title, NAME FROM film
 INNER JOIN language
 USING (language_id)
 WHERE language.name = ("English" OR "Italian") AND film.title LIKE 'M%'
@@ -62,6 +62,8 @@ ORDER BY COUNT(fa.actor_id) DESC;
 
 -- Query 8
 -- Using the tables payment and customer and the JOIN command, list the total paid by each customer. List the customers alphabetically by last name.
+
+
 
 SELECT c.first_name, c.last_name, SUM(p.amount)
 FROM customer c
