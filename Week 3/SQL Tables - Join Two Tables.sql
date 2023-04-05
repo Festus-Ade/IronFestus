@@ -54,4 +54,27 @@ GROUP BY full_name;
 
 -- Query 7
 -- List each film and the number of actors who are listed for that film.
+SELECT f.title, COUNT(fa.actor_id) 
+FROM film as f
+LEFT JOIN film_actor fa ON f.film_id = fa.film_id
+GROUP BY f.title
+ORDER BY COUNT(fa.actor_id) DESC;
 
+-- Query 8
+-- Using the tables payment and customer and the JOIN command, list the total paid by each customer. List the customers alphabetically by last name.
+
+SELECT c.first_name, c.last_name, SUM(p.amount)
+FROM customer c
+INNER JOIN payment p ON c.customer_id = p.customer_id
+GROUP BY c.customer_id
+ORDER BY c.last_name;
+
+-- Query 9
+-- Write sql statement to check if you can find any actor who never particiapted in any film.
+
+-- Query 10
+-- get the addresses that have NO customers, and ends with the letter "e"
+SELECT a.address 
+FROM address a
+LEFT JOIN customer c ON a.address_id = c.address_id
+WHERE c.customer_id IS NULL AND a.address LIKE '%e';
