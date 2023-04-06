@@ -87,4 +87,35 @@ LIMIT 1;
  SELECT title FROM film
 WHERE film_id in (SELECT film_id FROM film_actor
 					WHERE actor_id = 107);
-                    
+                
+                
+-- Query 7
+-- Films rented by most profitable customer. You can use the customer table and 
+-- payment table to find the most profitable customer ie the customer that has made the 
+-- largest sum of payments
+
+select film
+from film
+where film_id in (SELECT film_id
+from iventory
+where inventory_id in (SELECT inventory_id FROM rental
+					WHERE customer_id = (SELECT customer_id FROM payment
+										GROUP BY customer_id
+										ORDER BY sum(payment.amount) DESC 
+                                        LIMIT 1));
+                                        
+
+                                        
+-- Querry 8
+-- Customers who spent more than the average payments(this refers to the average of all amount spent per each customer).
+
+SELECT customer_id, first_name, last_name
+FROM customer
+WHERE customer_id IN (
+                    SELECT customer_id
+                    FROM payment
+                    GROUP BY customer_id
+                    HAVING sum(amount) > (SELECT AVG(total) FROM (SELECT sum(amount) AS total
+                                                                    FROM payment 
+                                                                    GROUP BY customer_id) AS total_customer))
+ORDER BY first_name, last_name;
